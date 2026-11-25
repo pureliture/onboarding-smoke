@@ -3,6 +3,7 @@ import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 MODE = os.environ.get("APP_MODE", "isolated")
+APP_VERSION = os.environ.get("APP_VERSION", "0.2.0")
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -16,7 +17,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == "/healthz":
-            return self._json(200, {"status": "ok", "app": "onboarding-smoke"})
+            return self._json(200, {"status": "ok", "app": "onboarding-smoke", "appVersion": APP_VERSION})
         if self.path == "/smoke":
             return self._json(200, {"ok": True, "mode": MODE})
         return self._json(404, {"error": "not_found"})
